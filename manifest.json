@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "author": "Artur Nowak",
-  "action": { "default_popup": "index.html", "default_title": "" },
-  "permissions": ["tabs"]
+  "content_scripts": [
+    {
+      "js": ["script.js"],
+      "matches": ["https://www.wanikani.com/*"]
+    }
+  ]
 }
