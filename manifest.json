@@ -1,7 +1,8 @@
 {
   "name": "Kanjis Dungeon Copy Extension",
   "version": "1.0.0",
-  "manifest_verson": 3,
+  "manifest_version": 3,
   "author": "Artur Nowak",
-  "action": { "default_popup": "index.html", "default_title": "" }
+  "action": { "default_popup": "index.html", "default_title": "" },
+  "permissions": ["tabs"]
 }
