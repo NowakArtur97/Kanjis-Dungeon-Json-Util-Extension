@@ -6,7 +6,11 @@
   "content_scripts": [
     {
       "js": ["script.js"],
-      "matches": ["https://www.wanikani.com/*"]
+      "matches": [
+        "https://www.wanikani.com/radicals/*",
+        "https://www.wanikani.com/kanji/*",
+        "https://www.wanikani.com/vocabulary/*"
+      ]
     }
   ]
 }

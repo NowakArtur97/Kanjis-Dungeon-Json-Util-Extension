@@ -26,34 +26,50 @@ class Word {
   }
 }
 
-const characters = document.querySelector("span.page-header__icon").textContent;
+const CHARACTER_SPAN_SELECTOR = "span.page-header__icon";
+const MAIN_MEANING_SELECTOR = "span.page-header__title-text";
+const ALTERNATIVE_MEANING_SELECTOR = "p.subject-section__meanings-items";
+const ALTERNATIVE_MEANING_HEADER_SELECTOR =
+  "h2.subject-section__meanings-title";
+const KANJI_ICON_SELECTOR = "span.page-header__icon--kanji";
+const KANJI_READINGS_SELECTOR = "p.subject-readings__reading-items";
+const VOCABULARY_ICON_SELECTOR = "span.page-header__icon--vocabulary";
+const VOCABULARY_READINGS_SELECTOR = "div.reading-with-audio__reading";
+
+const characters = document.querySelector(CHARACTER_SPAN_SELECTOR).textContent;
 const mainMeaning = document
-  .querySelector("span.page-header__title-text")
+  .querySelector(MAIN_MEANING_SELECTOR)
   .textContent.toLowerCase();
 const alternativeMeaningsSpan = document.querySelectorAll(
-  "p.subject-section__meanings-items"
+  ALTERNATIVE_MEANING_SELECTOR
+)[1];
+const alternativeMeaningsHeader = document.querySelectorAll(
+  ALTERNATIVE_MEANING_HEADER_SELECTOR
 )[1];
 let meanings = [mainMeaning];
-if (alternativeMeaningsSpan) {
+if (
+  alternativeMeaningsSpan &&
+  alternativeMeaningsHeader &&
+  alternativeMeaningsHeader.textContent.includes("Alternative")
+) {
   const alternativeMeanings = alternativeMeaningsSpan.textContent
     .split(", ")
     .map((t) => t.toLowerCase());
   meanings = [...meanings, ...alternativeMeanings];
 }
-if (document.querySelector("span.page-header__icon--kanji")) {
+if (document.querySelector(KANJI_ICON_SELECTOR)) {
   const type = "CharacterType.KANJI";
-  const kanjiReadings = document.querySelectorAll(
-    "p.subject-readings__reading-items"
-  );
+  const kanjiReadings = document.querySelectorAll(KANJI_READINGS_SELECTOR);
+  const emptyLineRegex = /(\r\n|\n|\r)/gm;
   const onyomi = kanjiReadings[0].textContent
     .split(", ")
-    .map((txt) => txt.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, ""));
+    .map((txt) => txt.replace(/ /g, "").replace(emptyLineRegex, ""));
   const kunyomi = kanjiReadings[1].textContent
     .split(", ")
-    .map((txt) => txt.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, ""));
+    .map((txt) => txt.replace(/ /g, "").replace(emptyLineRegex, ""));
   const nanori = kanjiReadings[2].textContent
     .split(", ")
-    .map((txt) => txt.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, ""));
+    .map((txt) => txt.replace(/ /g, "").replace(emptyLineRegex, ""));
   console.log(
     cleanUpAfterStringify(
       JSON.stringify(
@@ -61,9 +77,9 @@ if (document.querySelector("span.page-header__icon--kanji")) {
       )
     )
   );
-} else if (document.querySelector("span.page-header__icon--vocabulary")) {
+} else if (document.querySelector(VOCABULARY_ICON_SELECTOR)) {
   const type = "CharacterType.VOCABULARY";
-  const reading = document.querySelector("div.reading-with-audio__reading")
+  const reading = document.querySelector(VOCABULARY_READINGS_SELECTOR)
     .textContent;
   console.log(
     cleanUpAfterStringify(
